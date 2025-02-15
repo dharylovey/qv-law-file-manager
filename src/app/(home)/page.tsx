@@ -29,6 +29,9 @@ export default function Page() {
         <button className="bg-black dark:bg-white rounded-full w-fit text-white dark:text-black px-4 py-2">
           <Link href="/sign-in">Login Now</Link>
         </button>
+        <button className="bg-white dark:bg-dark rounded-full w-fit text-black dark:text-white px-4 py-2">
+          <Link href="/dashboard">Dashboard</Link>
+        </button>
       </motion.div>
     </AuroraBackground>
   );

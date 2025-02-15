@@ -1,5 +1,5 @@
 import { Icons } from '@/components/icons';
-import { loginSchema, registerSchema } from '@/zodSchema';
+import { fileSchema, fileType, loginSchema, registerSchema } from '@/zodSchema';
 import { z } from 'zod';
 
 export interface NavItem {
@@ -17,3 +17,5 @@ export interface NavItem {
 
 export type ILoginSchema = z.infer<typeof loginSchema>;
 export type IRegisterSchema = z.infer<typeof registerSchema>;
+export type IFileSchema = z.infer<typeof fileSchema>;
+export type IFileSchemaWithId = z.infer<typeof fileType>;

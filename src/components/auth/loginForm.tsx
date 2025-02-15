@@ -11,8 +11,8 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 import { loginSchema } from '@/zodSchema';
 import PasswordInput from '../ui/password-input';
-import toast from 'react-hot-toast';
 import { ILoginSchema } from '@/types';
+import { toast } from 'sonner';
 
 const LoginForm = () => {
   const form = useForm({
@@ -36,6 +36,12 @@ const LoginForm = () => {
   return (
     <>
       <Form {...form}>
+        <div className="flex flex-col space-y-2 text-center">
+          <h1 className="text-2xl font-semibold tracking-tight">Login to your account</h1>
+          <p className="text-sm text-muted-foreground">
+            Enter your email below to login to your account
+          </p>
+        </div>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
@@ -86,6 +92,15 @@ const LoginForm = () => {
             Forgot password?
           </Link>
         </form>
+        <div className="text-center text-sm">
+          {`Don't have an account?   `}
+          <Link
+            href="/sign-up"
+            className="font-semibold text-primary hover:underline hover:text-blue-500"
+          >
+            Sign up
+          </Link>
+        </div>
       </Form>
     </>
   );

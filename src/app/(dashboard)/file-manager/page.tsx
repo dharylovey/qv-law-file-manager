@@ -1,3 +1,4 @@
+import FileManageTable from '@/components/fileManager/FileManageTable';
 import PageContainer from '@/components/layout/PageContainer';
 import Headings from '@/components/typography/headings';
 import { Separator } from '@/components/ui/separator';
@@ -13,6 +14,7 @@ const FileManagerPage = () => {
         <Separator />
 
         {/* Dito ang list ng tables */}
+        <FileManageTable />
       </div>
     </PageContainer>
   );

@@ -5,10 +5,6 @@ export const loginSchema = z.object({
     .string()
     .min(1, 'Username is required.')
     .max(50, { message: 'Username must be less than 50 characters.' }),
-  name: z
-    .string()
-    .min(1, 'Name is required.')
-    .max(50, { message: 'Name must be less than 50 characters.' }),
   password: z
     .string()
     .min(1, 'Password is required.')
@@ -21,6 +17,11 @@ export const loginSchema = z.object({
 
 export const registerSchema = z
   .object({
+    name: z
+      .string()
+      .min(1, 'Name is required')
+      .max(50, { message: 'Name must be less than 50 characters.' }),
+    lastName: z.string().max(50, { message: 'Last name must be less than 50 characters.' }),
     userName: z
       .string({ message: 'User name is required' })
       .min(1, 'Name is required')
@@ -40,3 +41,14 @@ export const registerSchema = z
     message: 'Passwords do not match',
     path: ['confirmPassword'],
   });
+
+export const fileSchema = z.object({
+  fileNumber: z.string().min(1, 'File number is required'),
+  title: z.string().min(1, 'Title is required'),
+  name: z.string().min(1, 'Name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+});
+
+export const fileType = fileSchema.extend({
+  id: z.string(),
+});

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import localFont from 'next/font/local';
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'sonner';
 
 const popins = localFont({
   src: [
@@ -49,7 +49,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <Toaster position="top-center" />
+          <Toaster position="top-right" />
         </ThemeProvider>
       </body>
     </html>

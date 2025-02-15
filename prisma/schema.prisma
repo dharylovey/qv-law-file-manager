@@ -23,6 +23,7 @@ model User {
 model File {
   id         String   @id @default(cuid())
   fileNumber String
+  title      String
   name       String
   lastName   String
   user       User     @relation(fields: [userId], references: [id])
