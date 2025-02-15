@@ -1,14 +1,11 @@
-import Link from 'next/link';
+import LoginForm from '@/components/auth/loginForm';
 import React from 'react';
 
 const SignInPage = () => {
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="gap-4">
-        <Link href={'/'}>home</Link>
-        <Link href={'/dashboard'}>Dashboard</Link>
-      </div>
-    </div>
+    <>
+      <LoginForm />
+    </>
   );
 };
 

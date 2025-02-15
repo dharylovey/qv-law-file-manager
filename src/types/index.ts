@@ -1,4 +1,6 @@
 import { Icons } from '@/components/icons';
+import { loginSchema, registerSchema } from '@/zodSchema';
+import { z } from 'zod';
 
 export interface NavItem {
   title: string;
@@ -12,3 +14,6 @@ export interface NavItem {
   isActive?: boolean;
   items?: NavItem[];
 }
+
+export type ILoginSchema = z.infer<typeof loginSchema>;
+export type IRegisterSchema = z.infer<typeof registerSchema>;

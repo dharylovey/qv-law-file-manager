@@ -9,14 +9,12 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 import ClipLoader from 'react-spinners/ClipLoader';
 
-import { loginSchema } from '@/zodSchema';
+import { registerSchema } from '@/zodSchema';
 import PasswordInput from '../ui/password-input';
-import toast from 'react-hot-toast';
-import { ILoginSchema } from '@/types';
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const form = useForm({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       userName: '',
       password: '',
@@ -27,11 +25,7 @@ const LoginForm = () => {
     formState: { isSubmitting },
   } = form;
 
-  const onSubmit = async (data: ILoginSchema) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    toast.success('Login successful');
-  };
+  const onSubmit = async () => {};
 
   return (
     <>
@@ -46,7 +40,7 @@ const LoginForm = () => {
                   User Name <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} disabled={isSubmitting} />
+                  <Input {...field} disabled={isSubmitting} required />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -78,11 +72,7 @@ const LoginForm = () => {
               'Login'
             )}
           </Button>
-          <Link
-            href="/forgot-password"
-            className="text-sm text-blue-500 hover:underline"
-            aria-disabled={isSubmitting}
-          >
+          <Link href="/forgot-password" className="text-sm text-blue-500 hover:underline">
             Forgot password?
           </Link>
         </form>
@@ -91,4 +81,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
