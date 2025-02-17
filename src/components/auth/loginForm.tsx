@@ -12,9 +12,12 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import { loginSchema } from '@/zodSchema';
 import PasswordInput from '../ui/password-input';
 import { ILoginSchema } from '@/types';
-import { toast } from 'sonner';
+import { login } from '@/server/auth/user';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const LoginForm = () => {
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -28,9 +31,23 @@ const LoginForm = () => {
   } = form;
 
   const onSubmit = async (data: ILoginSchema) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    toast.success('Login successful');
+    try {
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => formData.append(key, value));
+
+      const response = await login(formData);
+
+      if (!response.success) {
+        toast.error(response.message);
+        return;
+      }
+
+      toast.success(response.message);
+      form.reset();
+      router.push('/dashboard');
+    } catch (error) {
+      toast.error(String(error));
+    }
   };
 
   return (

@@ -1,20 +1,21 @@
 'use client';
 
-import React from 'react';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
-import { Button } from '../ui/button';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useForm } from 'react-hook-form';
 import ClipLoader from 'react-spinners/ClipLoader';
-
-import { registerSchema } from '@/zodSchema';
-import PasswordInput from '../ui/password-input';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { IRegisterSchema } from '@/types';
-import { toast } from 'sonner';
+import { registerSchema } from '@/zodSchema';
+import PasswordInput from '@/components/ui/password-input';
+import { useRouter } from 'next/navigation';
+import { register } from '@/server/auth/user';
+import { toast } from 'react-toastify';
 
 const RegisterForm = () => {
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -31,9 +32,28 @@ const RegisterForm = () => {
   } = form;
 
   const onSubmit = async (data: IRegisterSchema) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    toast.success('Register successful');
+    try {
+      const result = registerSchema.safeParse(data);
+      if (!result.success) {
+        toast.error(result.error.issues[0].message);
+        return;
+      }
+
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => formData.append(key, value));
+      const response = await register(formData);
+
+      if (!response.success) {
+        toast.error(response.message);
+        return;
+      }
+
+      form.reset();
+      toast.success(response.message);
+      router.push('/sign-in');
+    } catch (error) {
+      toast.error(String(error));
+    }
   };
 
   return (
@@ -106,7 +126,7 @@ const RegisterForm = () => {
           />
           <FormField
             control={form.control}
-            name="password"
+            name="confirmPassword"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>

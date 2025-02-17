@@ -15,6 +15,11 @@ export interface NavItem {
   items?: NavItem[];
 }
 
+export type SessionPayload = {
+  userId: string | number;
+  expiresAt: Date;
+};
+
 export type ILoginSchema = z.infer<typeof loginSchema>;
 export type IRegisterSchema = z.infer<typeof registerSchema>;
 export type IFileSchema = z.infer<typeof fileSchema>;
