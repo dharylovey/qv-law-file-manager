@@ -13,17 +13,21 @@ export async function encrypt(payload: SessionPayload) {
 
 export async function decrypt(session: string | undefined = '') {
   try {
-    const { payload } = await jwtVerify(session, encodedKey);
+    const token = await jwtVerify(session, encodedKey);
     return {
       success: true,
       message: 'Valid token',
-      payload,
+      token,
     };
   } catch (error) {
-    return {
-      success: false,
-      message: 'Invalid token',
-      error: error,
-    };
+    if (error === 'ERR_JWS_INVALID') {
+      return {
+        success: false,
+        message: 'Invalid token',
+        error: 'Invalid token signature',
+      };
+    } else {
+      throw error;
+    }
   }
 }

@@ -3,6 +3,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import localFont from 'next/font/local';
 import { ToastContainer } from 'react-toastify';
+import Provider from '@/components/provider/QueryProvider';
 
 const popins = localFont({
   src: [
@@ -42,15 +43,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${popins.className}  antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <ToastContainer />
-        </ThemeProvider>
+        <Provider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <ToastContainer />
+          </ThemeProvider>
+        </Provider>
       </body>
     </html>
   );

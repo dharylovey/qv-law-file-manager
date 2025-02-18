@@ -11,10 +11,11 @@ import { IRegisterSchema } from '@/types';
 import { registerSchema } from '@/zodSchema';
 import PasswordInput from '@/components/ui/password-input';
 import { useRouter } from 'next/navigation';
-import { register } from '@/server/auth/user';
 import { toast } from 'react-toastify';
+import { useRegister } from '@/hooks/useAuthHooks';
 
 const RegisterForm = () => {
+  const { mutateAsync: register } = useRegister();
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(registerSchema),
@@ -39,20 +40,20 @@ const RegisterForm = () => {
         return;
       }
 
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) => formData.append(key, value));
-      const response = await register(formData);
+      const registerData = {
+        name: data.name,
+        lastName: data.lastName,
+        userName: data.userName,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+      };
 
-      if (!response.success) {
-        toast.error(response.message);
-        return;
-      }
+      await register(registerData);
 
       form.reset();
-      toast.success(response.message);
       router.push('/sign-in');
     } catch (error) {
-      toast.error(String(error));
+      console.error(error);
     }
   };
 
